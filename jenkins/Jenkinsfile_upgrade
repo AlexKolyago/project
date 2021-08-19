@@ -1,0 +1,20 @@
+pipeline{
+  agent any
+
+  triggers {
+    cron('H 6 * * *')
+  }
+
+  stages{
+    stage('Clone git repo'){
+      steps{
+        git url: 'https://github.com/AlexKolyago/project.git',
+       }
+    }
+  stage('Run ansible update'){
+    steps{
+      ansiblePlaybook disableHostKeyChecking: false, installation: 'ansible', inventory: 'ansible/inv.yaml', playbook: 'ansible/joomla_upgrade.yaml'
+      }
+    }
+  }
+}

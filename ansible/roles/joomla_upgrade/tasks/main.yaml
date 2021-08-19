@@ -1,0 +1,70 @@
+---
+- name: Create directory for backup joomla files
+  file:
+    path: /data/docker/backup/joomla_files
+    state: directory
+    owner: jenkins
+    group: jenkins
+    mode: 0755
+
+- name: Create directory for backup db files
+  file:
+    path: /data/docker/backup/db
+    state: directory
+    owner: jenkins
+    group: jenkins
+    mode: 0755
+
+- name: Sync files
+  shell: | 
+    rsync -avH /data/docker/joomla/ /data/docker/backup/joomla_files/
+    rsync -avH /data/docker/db/ /data/docker/backup/db/
+- name: Stop docker
+  shell: docker stop Joomla
+  args:
+    chdir: /data/docker
+
+- name: Remove docker
+  shell: docker rm Joomla
+
+- name: Copy docker-compose file to docker directory
+  copy:
+    src: /var/lib/jenkins/workspace/project/docker-compose/docker-compose_upgrade.yaml
+    dest: /data/docker
+    owner: jenkins
+    group: jenkins
+    mode: 0644
+
+- name: Run docker-compose up
+  shell: docker-compose -f docker-compose_upgrade.yaml up -d
+  args:
+    chdir: /data/docker
+
+- name: Pause for runing joomla
+  pause:
+    seconds: 10
+
+- name: Curl and check output
+  block:
+    - name: Curl content
+      uri:
+        url: "http://192.168.100.201:8080"
+        return_content: yes
+      register: content
+      failed_when: "'joomla.local.com' not in content.content"
+    - name: Print content
+      debug:
+        msg: "{{ content }}"
+  rescue:
+    - name: Send message Slack
+      slack:
+        token: TFBPBNB2L/B029K8FCCKX/OoqaBui0nV2nuYKND0eaQH0K
+        channel: '#alert-from-mon'
+        username: 'jenkins_build'
+        msg: 'Upgrade task: failed'
+        icon_url: https://image.flaticon.com/icons/png/128/2699/2699050.png
+        parse: 'full'
+        
+    - name: joomla_rollback
+      include_role:
+        name: joomla_rollback
