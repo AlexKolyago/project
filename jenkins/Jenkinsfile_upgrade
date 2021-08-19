@@ -9,11 +9,12 @@ pipeline{
     stage('Clone git repo'){
       steps{
         git url: 'https://github.com/AlexKolyago/project.git',
-       }
+          credentialsId: 'https_githab_user' 
+      }
     }
   stage('Run ansible update'){
     steps{
-      ansiblePlaybook disableHostKeyChecking: false, installation: 'ansible', inventory: 'ansible/inv.yaml', playbook: 'ansible/joomla_upgrade.yaml'
+      ansiblePlaybook credentialsId: 'jenkins_node', disableHostKeyChecking: true, installation: 'ansible', inventory: 'ansible/inv.yaml', playbook: 'ansible/joomla_upgrade.yaml'
       }
     }
   }
