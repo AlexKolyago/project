@@ -7,11 +7,15 @@
 
 ### Description of application for deployment
 
-⋅⋅*Name of application: Joomla
-⋅⋅*Programming language: PHP and JavaScript
-⋅⋅*BD: MySQL
-⋅⋅*[Website](www.joomla.org)
-⋅⋅*[Joomla Git](https://github.com/joomla/joomla-cms)
+Name of application: Joomla
+
+Programming language: PHP and JavaScript
+
+BD: MySQL
+
+[Website](www.joomla.org)
+
+[Joomla Git](https://github.com/joomla/joomla-cms)
 
 ------
 ## Pipeline. High Level Design
@@ -22,15 +26,15 @@
 ## Technologies which were used in project
 
 
-⋅⋅⋅Orchestration: Jenkins
+Orchestration: Jenkins
 
-⋅⋅⋅Automation tools: Ansible
+Automation tools: Ansible
 
-⋅⋅⋅SCM: GitHub
+SCM: GitHub
 
-⋅⋅⋅CI description: by schedule (every day in 6:00 am)
+CI description: by schedule (every day in 6:00 am)
 
-⋅⋅⋅Other: Vagrant, Docker, Mysql
+Other: Vagrant, Docker, Mysql
 
 ------
 ## Deployment flows short description:
