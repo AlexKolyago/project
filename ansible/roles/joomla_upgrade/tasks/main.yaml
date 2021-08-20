@@ -62,7 +62,6 @@
         channel: '#alert-from-mon'
         username: 'jenkins_build'
         msg: 'Upgrade task: failed'
-        icon_url: https://image.flaticon.com/icons/png/128/2699/2699050.png
         parse: 'full'
         
     - name: joomla_rollback
