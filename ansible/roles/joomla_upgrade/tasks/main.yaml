@@ -62,16 +62,9 @@
         # To retrieve your slack token, open your team settings and look for the
         # Incoming Webhooks plugin
         token: TFBPBNB2L/B02BUJZD6TX/eQVr0WAKd60bE7VoNEPK6Rq1
-        msg: "test slack notif"
+        msg: "Upgrade task: failed"
         channel: "#alert-from-mon"
-        username: "ansible-bot"
-    #- name: Send message Slack
-      #slack:
-        #token: TFBPBNB2L/B029K8FCCKX/OoqaBui0nV2nuYKND0eaQH0K
-        #channel: '#alert-from-mon'
-        #username: 'jenkins_build'
-        #msg: 'Upgrade task: failed'
-        #parse: 'full'
+        username: "jenkins_build"
         
     - name: joomla_rollback
       include_role:
