@@ -26,16 +26,19 @@
         url: "http://192.168.100.201:8080"
         return_content: yes
       register: content
-      failed_when: "'joomla.local.com' not in content.content"
+      failed_when: "'joomla.local.com.TEST.ROLLBACK' not in content.content"
     - name: Print content
       debug:
         msg: "{{ content }}"
   rescue:
-    - name: Send message via Slack
-      slack:
-        token: TFBPBNB2L/B029K8FCCKX/OoqaBui0nV2nuYKND0eaQH0K
-        channel: '#alert-from-mon'
-        username: 'jenkins_build'
-        msg: 'Rollback task: failed'
+    - name: Send notification message via Slack
+      local_action:
+        module: slack
+        # To retrieve your slack token, open your team settings and look for the
+        # Incoming Webhooks plugin
+        token: TFBPBNB2L/B02BUJZD6TX/eQVr0WAKd60bE7VoNEPK6Rq1
+        msg: "Rollback task: failed"
+        channel: "#alert-from-mon"
         icon_url: https://silicophilic.com/wp-content/uploads/2021/01/Critical-Service-Failed.png
+        username: "jenkins_build"
         parse: 'full'
