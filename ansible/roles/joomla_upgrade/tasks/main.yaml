@@ -56,13 +56,13 @@
       debug:
         msg: "{{ content }}"
   rescue:
-    - name: Send message Slack
-      slack:
-        token: TFBPBNB2L/B029K8FCCKX/OoqaBui0nV2nuYKND0eaQH0K
-        channel: '#alert-from-mon'
-        username: 'jenkins_build'
-        msg: 'Upgrade task: failed'
-        parse: 'full'
+    #- name: Send message Slack
+      #slack:
+        #token: TFBPBNB2L/B029K8FCCKX/OoqaBui0nV2nuYKND0eaQH0K
+        #channel: '#alert-from-mon'
+        #username: 'jenkins_build'
+        #msg: 'Upgrade task: failed'
+        #parse: 'full'
         
     - name: joomla_rollback
       include_role:
